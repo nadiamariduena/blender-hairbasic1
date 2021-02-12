@@ -80,6 +80,11 @@
 
 #### Articles and videos that helped to find this first solution:
 
+[how to transfer hair as .obj file](https://blender.stackexchange.com/questions/40912/how-to-transfer-hair-as-obj-file)
+
+
+[Why I can’t see hair in exported glTF file?](https://blenderartists.org/t/why-i-cant-see-hair-in-exported-gltf-file/1213013)
+
 [How can curves be converted to meshes](https://blender.stackexchange.com/questions/2917/how-can-curves-be-converted-to-meshes)
 
 [Convert Cycles Hair Particle System to Mesh Object](https://blender.stackexchange.com/questions/2745/convert-cycles-hair-particle-system-to-mesh-object/5255#5255)
