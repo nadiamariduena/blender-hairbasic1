@@ -67,7 +67,7 @@ class App extends Component {
     //
     // 6  ******
     //
-    this.camera.position.z = 2.6; // is used here to set some distance from a cube that is located at z = 0
+    this.camera.position.z = 30; // is used here to set some distance from a cube that is located at z = 0
     // OrbitControls allow a camera to orbit around the object
     // https://threejs.org/docs/#examples/controls/OrbitControls
     this.controls = new OrbitControls(this.camera, this.el);
@@ -96,20 +96,63 @@ class App extends Component {
     this.noise = new Perlin();
     //
     //
-    const loader = new THREE.TextureLoader();
+    const loaderImg = new THREE.TextureLoader();
     //
     //
 
     //
     //
     //
+    //----------------------------------
+    //         BLENDER  MODELS
+    //----------------------------------
+    const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("myDecoder/");
+    loader.setDRACOLoader(dracoLoader);
     //
-    //
-    //
-    //
+    // terrain_grosso_moon.-Normalize-4_.glb
+    // 49,4Kb
+    loader.load("./models/hair-export4.glb", (gltf) => {
+      this.meshy = gltf.scene;
+      gltf.scene.traverse((model) => {
+        if (model.material) model.material.metalness = 0.08;
 
- 
+        model.receiveShadow = true;
+        model.scale.set(3, 3, 3);
+        // model.rotation.y = 1;
+        model.rotation.x += -0;
+        model.rotation.y += 0;
+        //
+        model.position.x = 0;
+        model.position.y = 0;
+        model.position.z = -2;
+      });
 
+      this.scene.add(gltf.scene);
+    });
+
+    //
+    //
+    // loader.load("./models/hair-export4.glb", (gltf) => {
+    //   this.meshy = gltf.scene;
+    //   gltf.scene.traverse((model) => {
+    //     if (model.material) model.material.metalness = 0.08;
+
+    //     model.receiveShadow = true;
+    //     model.scale.set(2, 2, 2);
+    //     // model.rotation.y = 1;
+
+    //     //
+    //     model.position.x = 0;
+    //     model.position.y = 0;
+    //     model.position.z = -2;
+    //   });
+
+    //   this.scene.add(gltf.scene);
+    // });
+    // //
+    //
     //
     //
     //
@@ -122,14 +165,14 @@ class App extends Component {
     // its related to this   const waveX1 = 0.1 * Math.sin(dots_vertices.x * 2 + t_timeClock);
     //
     //
-    this.material = new THREE.MeshBasicMaterial({
+    this.materialBlob = new THREE.MeshBasicMaterial({
       color: 0x000000,
       wireframe: true,
-      // map: loader.load("/img/NataliaSamoilova_metalmagazine-10.jpg"),
+      // map: loaderImg.load("/img/NataliaSamoilova_metalmagazine-10.jpg"),
     });
 
     //
-    this.cube = new THREE.Mesh(this.geometry, this.material);
+    this.cube = new THREE.Mesh(this.geometry, this.materialBlob);
     this.scene.add(this.cube);
     //
     //
@@ -143,6 +186,59 @@ class App extends Component {
 
     // this.clock = new THREE.Clock();
 
+    //
+    //
+    //
+
+    //---------------------
+    //   Directional Light
+    //---------------------
+    //
+    //
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.autoUpdate = true;
+    this.renderer.gammaFactor = 2.2;
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(5, -1, 100);
+
+    // position as follow , the light comes from x:-1000, comes from: y and the last comes from : z
+    directionalLight.position.set(1000, 1000, 1000);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.camera = new THREE.OrthographicCamera(
+      -100,
+      200,
+      -200,
+      200,
+      0.5,
+      5000
+    );
+    // //
+    this.scene.add(directionalLight);
+    // // The light points to the flat ground
+    // this.directionalLight.target = this.plane;
+    //
+    //
+    //THIS LIGHT IS ON THE BOTTOM
+    //---------------------
+    //     spotLight FF5733
+    //---------------------
+    //
+    //
+    // With the light you can see the colors you added to each geometry in the materials
+    this.spotLight = new THREE.SpotLight(0xffffff, 0.5); //intensity:   0.5);
+    // spotLight.position.set( 0 , 10 , 0 );
+    this.spotLight.position.set(5, -50, 0); //x, y , z   original (5, -50, 0);
+    // (2, 32, 32); with this settings the light will be on the front
+    this.spotLight.castShadow = true;
+    //
+    // this will remove the shadows
+    this.spotLight.visible = true;
+    //
+    this.scene.add(this.spotLight);
+    //
+    //
     //
   };
   /*
@@ -166,28 +262,28 @@ class App extends Component {
     //      The waves
     // -------------------------------
     //
-    var spikes = 2;
-    for (
-      var eachVertice = 0;
-      eachVertice < this.cube.geometry.vertices.length;
-      eachVertice++
-    ) {
-      var p = this.cube.geometry.vertices[eachVertice];
-      p.normalize().multiplyScalar(
-        1 +
-          0.3 *
-            this.noise.perlin3(
-              p.x * spikes + this.animationSpeed,
-              p.y * spikes,
-              p.z * spikes
-            )
-      );
-    }
-    // noise related you can also use Math.sin instead of the noise but its different
-    // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/perlin/
-    this.cube.geometry.computeVertexNormals();
-    this.cube.geometry.normalsNeedUpdate = true;
-    this.cube.geometry.verticesNeedUpdate = true;
+    // var spikes = 2;
+    // for (
+    //   var eachVertice = 0;
+    //   eachVertice < this.cube.geometry.vertices.length;
+    //   eachVertice++
+    // ) {
+    //   var p = this.cube.geometry.vertices[eachVertice];
+    //   p.normalize().multiplyScalar(
+    //     1 +
+    //       0.3 *
+    //         this.noise.perlin3(
+    //           p.x * spikes + this.animationSpeed,
+    //           p.y * spikes,
+    //           p.z * spikes
+    //         )
+    //   );
+    // }
+    // // noise related you can also use Math.sin instead of the noise but its different
+    // // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/perlin/
+    // this.cube.geometry.computeVertexNormals();
+    // this.cube.geometry.normalsNeedUpdate = true;
+    // this.cube.geometry.verticesNeedUpdate = true;
     //
     //
 

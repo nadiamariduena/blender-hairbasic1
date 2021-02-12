@@ -64,4 +64,32 @@
 
 ```
 
-### To be Continued
+<br>
+<br>
+<br>
+
+### After few hours of searching and testing
+
+- I COULD FINALLY come out with something, but i don't think it s the right way as the models are huge, and the reason for that is due to the fact I am using a hell of meshes.
+
+##### Looks like hair but it s not fluffy enough and is too big.
+
+[<img src="./src/img/exporting-hair_no1.gif"/>]()
+
+<br>
+
+#### Articles and videos that helped to find this first solution:
+
+[How can curves be converted to meshes](https://blender.stackexchange.com/questions/2917/how-can-curves-be-converted-to-meshes)
+
+[Convert Cycles Hair Particle System to Mesh Object](https://blender.stackexchange.com/questions/2745/convert-cycles-hair-particle-system-to-mesh-object/5255#5255)
+
+```javascript
+alt - C;
+// to convert to Meshes in Blender is deprecated , you have to be under Object and convert to Curve to make appear the babel option.
+```
+
+#### The steps ...
+
+<!-- - After you created the fluffy hair in the sphere
+- Move the fluffy  -->
