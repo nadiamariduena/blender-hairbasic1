@@ -1,11 +1,8 @@
+```javascript
 import React, { Component } from "react";
 import * as THREE from "three";
-import Perlin from "phaser3-rex-plugins/plugins/perlin.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-//
-//
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import Perlin from "phaser3-rex-plugins/plugins/perlin.js";
 
 //phaser3-rex-notes/master/dist/rexperlinplugin.min.js', true);
 const style = {
@@ -99,22 +96,6 @@ class App extends Component {
     const loader = new THREE.TextureLoader();
     //
     //
-
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-
- 
-
-    //
-    //
-    //
-    //
-
     // THREE.PlaneGeometry(5, 3); the 5 stands for width and 3 for height
     //const geometry = new THREE.PlaneGeometry(5, 2.5, 20, 15);
     this.geometry = new THREE.SphereGeometry(50, 50, 50, 50);
@@ -232,3 +213,38 @@ class App extends Component {
 
 //
 export default App;
+```
+
+#### scss
+
+```scss
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+  background-color: lemonchiffon;
+
+  .wrapper-flagZoomBox {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flagZoomBox {
+    width: 90%;
+    margin: 0 5%;
+    background: transparent;
+    text-align: center;
+    max-width: 900px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 2px solid #000;
+  }
+}
+```
