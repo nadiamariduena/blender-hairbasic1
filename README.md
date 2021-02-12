@@ -82,7 +82,6 @@
 
 [how to transfer hair as .obj file](https://blender.stackexchange.com/questions/40912/how-to-transfer-hair-as-obj-file)
 
-
 [Why I can’t see hair in exported glTF file?](https://blenderartists.org/t/why-i-cant-see-hair-in-exported-gltf-file/1213013)
 
 [How can curves be converted to meshes](https://blender.stackexchange.com/questions/2917/how-can-curves-be-converted-to-meshes)
@@ -94,7 +93,27 @@ alt - C;
 // to convert to Meshes in Blender is deprecated , you have to be under Object and convert to Curve to make appear the babel option.
 ```
 
+<!-- -
+
+https://www.youtube.com/watch?v=M-PFEAKSxHc
+
 #### The steps ...
 
-<!-- - After you created the fluffy hair in the sphere
+After you created the fluffy hair in the sphere
 - Move the fluffy  -->
+
+<br>
+<br>
+<br>
+
+### Using the SCREW MODIFIER
+
+[<img src="./src/img/hair3_screw.jpg"/>]()
+
+#### I really dont know if it should look like this:
+
+- The hair is too thick and dont look fluffy like in the oroginal sphere.
+
+[<img src="./src/img/screw_modifier2.jpg"/>]()
+
+[<img src="./src/img/hair_screw2.gif"/>]()
