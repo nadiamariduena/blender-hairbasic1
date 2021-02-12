@@ -1,6 +1,12 @@
 # 🦄
 
-# BASIC HAIR SET UP
+# BASIC HAIR SET UP with Blender/threejs
+
+- I want to add some hairy/fury model to my threejs scene, I have seen advanced tutorials about how to make it in threejs without Blender, but I think I still need to learn a lot before diving into such code, so I will try my best to make it.
+
+[Fuzzy Meshes | MEDIUM](https://medium.com/@Zadvorsky/fuzzy-meshes-4c7fd3910d6f)
+
+[<img src="./src/img/hairy_medium.gif"/>](https://medium.com/@Zadvorsky/fuzzy-meshes-4c7fd3910d6f)
 
 <br>
 
