@@ -110,10 +110,39 @@ After you created the fluffy hair in the sphere
 
 [<img src="./src/img/hair3_screw.jpg"/>]()
 
+###### (how it looks in blender)
+
+<br>
+
 #### I really dont know if it should look like this:
 
-- The hair is too thick and dont look fluffy like in the oroginal sphere.
-
-[<img src="./src/img/screw_modifier2.jpg"/>]()
+- The hair is too thick and dont look fluffy like in the original sphere.
 
 [<img src="./src/img/hair_screw2.gif"/>]()
+
+<br>
+<br>
+<br>
+
+### PROCESS (using screw modifier)
+
+[<img src="./src/img/hair_screw_process.gif"/>]()
+
+ #### 1) Duplicate the hair from the sphere to convert the "hair particles" to Mesh, so that you can work with the screw Modifier (without this you cant).
+
+ - To duplicate-: Press G and then y or x axis (G will make it move and y or x are the directions you want to move).
+
+
+ #### 2) After you add the screw modifier to the duplicated hair (the orange thing), it will open a box with options: 
+
+ <br>
+
+ 
+**Go to** the Steps Viewport and change the following:
+- Change it to 1 or 2
+- If you changed it to one the hair ball (orange) will dissappear but dont worry.
+
+**Go to** the Angle option in the same box
+
+- Try to set how thin each hair has to be.
+-  Between 359° and 360° , knowing that if you go under 359° it will be thick , the same if you go above 360°.

@@ -113,7 +113,7 @@ class App extends Component {
     //
     // terrain_grosso_moon.-Normalize-4_.glb
     // 49,4Kb
-    loader.load("./models/hair3-2lights_screw2.glb", (gltf) => {
+    loader.load("./models/blu3export_screwtestt.glb", (gltf) => {
       this.meshy = gltf.scene;
       gltf.scene.traverse((model) => {
         if (model.material) model.material.metalness = 0.08;
