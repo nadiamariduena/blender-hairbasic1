@@ -68,7 +68,7 @@ class App extends Component {
     // 6  ******
     //
     this.camera.position.y = 2;
-    this.camera.position.z = 20; // is used here to set some distance from a cube that is located at z = 0
+    this.camera.position.z = 10; // is used here to set some distance from a cube that is located at z = 0
     // OrbitControls allow a camera to orbit around the object
     // https://threejs.org/docs/#examples/controls/OrbitControls
     this.controls = new OrbitControls(this.camera, this.el);
@@ -77,11 +77,19 @@ class App extends Component {
     //
     this.renderer = new THREE.WebGLRenderer({
       // set the transparency of the scene, otherwise its black
-      alpha: true,
+      // alpha: true,
       // will make the edges smooth
       antialias: true,
     });
     this.renderer.setSize(width, height);
+    //
+    //
+    // shadowMap is connected to the shadows in any object/model
+    this.renderer.shadowMap.enabled = true;
+    // if you dont add the line below "THREE.PCFSoftShadowMap" you will have the shadow but...
+    // BUT the shadow will be pixelated and UGLY
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    //
     // here you append it to the jsx
     this.el.appendChild(this.renderer.domElement); // mount using React ref
   };
@@ -98,17 +106,6 @@ class App extends Component {
     //
     //
 
-    //
-    //
-
-    //
-    //
-
-    //
-    //
-    //
-    //
-    //
     // this.testo = new THREE.MeshPhongMaterial({
     //   color: 0xff0000,
     //   shininess: 0,
@@ -117,30 +114,74 @@ class App extends Component {
 
     //
     //
-    // const loaderImg = new THREE.TextureLoader();
+    this.loaderImg = new THREE.TextureLoader();
+    // this img is linked to the red carpet
+    this.textureRed = this.loaderImg.load("./img/radiance-velvet222.jpg");
+    //
+    //
+    //
+    //
+    //const geometry = new THREE.PlaneGeometry(5, 2.5, 20, 15);
+    //
+    // this.geometry = new THREE.PlaneGeometry(50, 50, 100);
+    //
+    // it will increase the segments in the geometry
+    // its related to this   const waveX1 = 0.1 * Math.sin(dots_vertices.x * 2 + t_timeClock);
+    //
+    //
+    // this.materialBlob = new THREE.MeshPhongMaterial({
+    //   shininess: 0.8,
+    //   roughness: 0,
+    //   color: 0x2273fb,
+    //   wireframe: true,
+    // });
 
+    //
+    // this.cube = new THREE.Mesh(this.geometry, this.materialBlob);
+    // this.scene.add(this.cube);
+    //
+    // this img is linked to the blue carpet
+    //
+    this.textureBlue = this.loaderImg.load("./img/blue_material-velvi_ddd.jpg");
+    this.materialBlue = new THREE.MeshLambertMaterial({
+      shininess: 0,
+      roughness: 0,
+      color: 0x2273fb,
+      wireframe: true,
+    });
+
+    //
+    //
+    //
+    const loaderImgTestYellowTree = new THREE.TextureLoader();
+
+    //
+    //
+    //DBFB22 yellow acid
     // // another way
-    // this.meshFloor = new THREE.Mesh(
-    //   new THREE.PlaneGeometry(18, 18, 50, 50), //, 360, 180)
-    //   new THREE.MeshPhongMaterial({
-    //     shininess: 0.8,
-    //     roughness: 5,
-    //     color: 0xfb225d,
-    //     map: loaderImg.load("./img/brown_fur.jpg"),
-    //   })
-    // );
-    // //
-    // //
-    // this.meshFloor.rotation.x -= Math.PI / 2;
-    // this.meshFloor.position.y = 1;
-    // this.meshFloor.receiveShadow = true;
-    // this.scene.add(this.meshFloor);
-    // //
+    // red carpet material turned blue
+    this.meshFloor = new THREE.Mesh(
+      new THREE.PlaneGeometry(50, 50, 50, 50), //, 360, 180)
+      new THREE.MeshPhongMaterial({
+        shininess: 0,
+        roughness: 0,
+        // color: 0xfb225d, //this is red
+        map: this.textureBlue,
+      })
+    );
+    //
+    //
+    this.meshFloor.rotation.x -= Math.PI / 2;
+    this.meshFloor.position.y = 1;
+    this.meshFloor.position.z = 1;
+    this.meshFloor.receiveShadow = true;
+    this.scene.add(this.meshFloor);
+    //
 
     //
     //
 
-    //
+    //https://threejsfundamentals.org/threejs/lessons/threejs-materials.html
     //----------------------------------
     //         BLENDER  MODELS
     //----------------------------------
@@ -149,48 +190,79 @@ class App extends Component {
     dracoLoader.setDecoderPath("myDecoder/");
     loader.setDRACOLoader(dracoLoader);
     //
-    // terrain_grosso_moon.-Normalize-4_.glb
-    // 49,4Kb
-    // loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
-    //   this.mesh = gltf.scene;
 
-    //   gltf.scene.traverse((model) => {
-    //     if (model.material) model.material.shininess = 0.08;
-
-    //     model.receiveShadow = true;
-    //     model.scale.set(1.2, 1.2, 1.2);
-    //     // model.rotation.y = 1;
-    //     // model.rotation.x += -0;
-    //     // model.rotation.y += 0;
-    //     //
-    //     model.position.x = 0;
-    //     model.position.y = 0;
-    //     model.position.z = -2;
-    //   });
-
-    //   this.scene.add(gltf.scene);
-    // });
-
-    //velvi2t.glb
     //
-    loader.load("./models/velvi2t.glb", (gltf) => {
+    //
+    //
+    // This one was the plane model I created in Blender and that didnt work when exporting
+    // That s why you see it in black
+    //
+    loader.load("./models/Velvet-test2_blue-carpet.glb", (gltf) => {
       this.mesh = gltf.scene;
 
       gltf.scene.traverse((model) => {
-        if (model.material) model.material.shininess = 0.08;
+        // if (model.material) model.material.shininess = 0;
 
         model.receiveShadow = true;
-        model.scale.set(20, 20, 20);
-
+        model.scale.set(10, 10, 10);
+        // model.rotation.y = 1;
+        // model.rotation.x += -0;
+        // model.rotation.y += 0;
         //
-        model.rotation.x -= Math.PI / 2;
-
+        model.position.x = 0;
         model.position.y = 0;
         model.position.z = -2;
       });
 
       this.scene.add(gltf.scene);
     });
+
+    //
+    //
+    //
+    //
+    // LEMON TREE 1
+    loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
+      this.mesh = gltf.scene;
+
+      gltf.scene.traverse((model) => {
+        if (model.material) model.material.map = this.textureRed;
+
+        model.castShadow = true;
+        model.scale.set(1.2, 1.2, 1.2);
+        //
+        model.position.x = 2;
+        model.position.y = 5;
+        model.position.z = 2;
+      });
+
+      this.scene.add(gltf.scene);
+    });
+    //
+    //
+    //
+    // 2 original color ** no materials
+    //
+    //
+    loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
+      // with the this.meshToPlayWithAnimation , you can animate this model
+      this.meshToPlayWithAnimation = gltf.scene;
+
+      gltf.scene.traverse((model) => {
+        // if (model.material) model.material.map = this.textureRed;
+        model.castShadow = true;
+        model.scale.set(0.8, 0.8, 0.8);
+        //
+        model.position.x = -2;
+        model.position.y = 3;
+        model.position.z = 2;
+      });
+
+      this.scene.add(gltf.scene);
+    });
+
+    //
+    //
     //
     //
     //

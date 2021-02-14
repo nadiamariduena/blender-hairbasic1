@@ -192,7 +192,7 @@ After you created the fluffy hair in the sphere
 
 - It s exporting it but not completely 🤔
 
- > **Instead of the red carpet**, I am getting this:
+> **Instead of the red carpet**, I am getting this:
 
 [<img src="./src/img/no exporting.jpg"/>]()
 
@@ -203,8 +203,8 @@ After you created the fluffy hair in the sphere
 <br>
 
 ## Another solution 🦄
- 
-- To simply add an image map to a threejs Geometry, simplier but not the same, I cannot say I am   satisfied with the result because it can be there s something else.
+
+- To simply add an image map to a threejs Geometry, simplier but not the same, I cannot say I am satisfied with the result.
 
 [<img src="./src/img/pinky_fur1_threejsloader.jpg"/>]()
 
@@ -232,5 +232,130 @@ this.scene.add(this.meshFloor);
 //
 ```
 
-
 [<img src="./src/img/hair_imageload2.jpg"/>]()
+
+<br>
+<br>
+<br>
+
+## Other tests
+
+- In the following example you will see that the model I am exporting from blender dont work correctly when I add the material img inside the traverse function, for me a "newbie" I sincerely have no idea what is going on, but I could at least figure out when it works without bugging.
+
+<br>
+
+#### with errors
+
+```javascript
+//
+const loaderImgTestYellowTree = new THREE.TextureLoader();
+//
+//
+loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
+  this.mesh = gltf.scene;
+
+  gltf.scene.traverse((model) => {
+    //
+    model.material = new THREE.MeshPhongMaterial({
+      map: loaderImgTestYellowTree.load("./img/brown_fur.jpg"),
+      color: 0xff00ff,
+    });
+
+    model.receiveShadow = true;
+    model.scale.set(1.2, 1.2, 1.2);
+
+    model.position.x = 0;
+    model.position.y = 0;
+    model.position.z = -2;
+  });
+
+  this.scene.add(gltf.scene);
+});
+```
+
+- So here I added a material to the yellow model to see if it actually did something when applying to it, yes it did, you can see the it added the material img but the model suffered some sort of compression, I say compression because you can see that the model is not fully loaded.
+
+[<img src="./src/img/wrong_material.jpg"/>]()
+
+<br>
+<br>
+<br>
+<br>
+
+### without errors 🦄
+
+- IT's still **not what I want but** I think **I am getting closer**
+
+- In this example I added the red carpet material I created yesterday in Blender, I baked it and it was transformed in an image I could use as a material directly in Threejs.
+
+###### I used the same modus operandi and I created/baked an aproximation of the wonderful [blue Klein ](https://www.moma.org/collection/works/80103) to use instead of the red
+
+> aproximation: #072BB8
+
+[<img src="./src/img/blue_klein.jpg"/>]()
+
+<br>
+
+- Its a good solution for little projects, but I definitely need to learn how to export the CYCLES or Nodes , because If I want to add different kind of materials to different things in one single model, this method is not going to work.
+
+<br>
+<br>
+
+[<img src="./src/img/colors_shades.gif"/>]()
+
+```javascript
+this.loaderImg = new THREE.TextureLoader();
+// this img is linked to the red carpet or anything using the: this.texturess
+this.texturess = this.loaderImg.load("./img/radiance-velvet222.jpg");
+//
+//
+//
+// Linked to the wrong version
+const loaderImgTestYellowTree = new THREE.TextureLoader();
+//
+//
+//----------------------------------
+//         BLENDER  MODELS
+//----------------------------------
+const loader = new GLTFLoader();
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("myDecoder/");
+loader.setDRACOLoader(dracoLoader);
+//
+//
+loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
+  this.mesh = gltf.scene;
+
+  gltf.scene.traverse((model) => {
+    // if (model.material) model.material.shininess = 0.08;
+    if (model.material) model.material.map = this.texturess;
+
+    //  ******
+    //  ******
+    //                Here I hide the wrong version
+    // model.material = new THREE.MeshPhongMaterial({
+    //   map: loaderImgTestYellowTree.load("./img/brown_fur.jpg"),
+    //   color: 0xff00ff,
+    // });
+    //  ******
+    //  ******
+
+    model.receiveShadow = true;
+    model.scale.set(1.2, 1.2, 1.2);
+
+    //
+
+    model.position.x = 0;
+    model.position.y = 0;
+    model.position.z = -2;
+  });
+
+  this.scene.add(gltf.scene);
+});
+```
+
+<br>
+
+##### SO here you can see that the image has been added to the model, same for the blue in the Plane Geometry
+
+[<img src="./src/img/correctway.gif"/>]()
