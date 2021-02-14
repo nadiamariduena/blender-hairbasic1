@@ -7,6 +7,7 @@
 
 
 /public/models
+/src/App.js
 
 # testing
 /coverage

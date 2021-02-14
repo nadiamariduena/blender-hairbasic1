@@ -12,7 +12,7 @@
 
 ## CREATE A SPHERE AND ADD SOME HAIR TO IT
 
-[<img src="./src/img/hair-rendered_nolights.jpg"/>]()
+[<img src="./src/img/hair-rendered_nolights.jpg"/>](https://youtu.be/nMULgZREpMw)
 
 ##### The Hair isn't the complicated part but the conversion and then the export to the threejs scene, we will see that later, first lets create the sphere and then add some hair.
 
@@ -37,7 +37,7 @@
 
 ### RESULT Lights
 
-[<img src="./src/img/hair3.jpg"/>]()
+[<img src="./src/img/hair3.jpg"/>](https://youtu.be/S2l1mvU28OQ)
 
 <br>
 <br>
@@ -128,8 +128,6 @@ After you created the fluffy hair in the sphere
 
 [<img src="./src/img/hair_screw_process.gif"/>](https://www.youtube.com/watch?v=7dGA3jPoQUU)
 
-
-
 #### 1) Duplicate the hair from the sphere to convert the "hair particles" to Mesh, so that you can work with the screw Modifier (without this you cant).
 
 - To duplicate-: Press G and then y or x axis (G will make it move and y or x are the directions you want to move).
@@ -152,8 +150,49 @@ After you created the fluffy hair in the sphere
 <br>
 <br>
 
-### AT this point 
+### AT this point
 
 - I am thinking about to just add a velvet looking ground floor using some image texture.
 
 - I am trying all this, because I already have a scene in my mind and I am just looking for a nice and simple way to make it.
+
+<br>
+<br>
+<br>
+
+##### SO YESTERDAY
+
+- I spend the whole day figuring it out **how to work with the Nodes in Blender** so to do this:
+
+ 
+[<img src="./src/img/hair_img_nodes-blender1.gif"/>]()
+
+>I had to **install an extension** to have one of the boxes in the picture, because after reading a couple of articles nobody could tell that you needed to install it first before using the shortcut 🤦, yep **some tutorial confuse you even further**
+
+<br>
+
+**Node Wrangler**
+
+ [Node Wrangle | Usage | activation](https://docs.blender.org/manual/en/latest/addons/node/node_wrangler.html)
+
+[<img src="./src/img/node-wrangler.gif"/>]()
+
+
+- Bump helps you to reach even further the details of the image.
+
+> The Bump node generates a perturbed normal from a height texture, for bump mapping. The height value will be sampled at the shading point and two nearby points on the surface to determine the local direction of the normal.
+
+[<img src="./src/img/bump2.gif"/>]()
+
+ 
+
+[Bump Node](https://docs.blender.org/manual/en/latest/render/shader_nodes/vector/bump.html)
+
+[<img src="./src/img/hair_img_nodes-blender2.gif"/>]()
+ 
+
+
+#### All seemed perfect until I exported it
+
+- Maybe I am doing something wrong? 
+

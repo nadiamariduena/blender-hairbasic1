@@ -67,7 +67,8 @@ class App extends Component {
     //
     // 6  ******
     //
-    this.camera.position.z = 30; // is used here to set some distance from a cube that is located at z = 0
+    this.camera.position.y = 2;
+    this.camera.position.z = 20; // is used here to set some distance from a cube that is located at z = 0
     // OrbitControls allow a camera to orbit around the object
     // https://threejs.org/docs/#examples/controls/OrbitControls
     this.controls = new OrbitControls(this.camera, this.el);
@@ -96,12 +97,54 @@ class App extends Component {
     this.noise = new Perlin();
     //
     //
-    const loaderImg = new THREE.TextureLoader();
+
     //
     //
 
     //
     //
+
+    //
+    //
+    //
+    //
+    //
+    // this.testo = new THREE.MeshPhongMaterial({
+    //   color: 0xff0000,
+    //   shininess: 0,
+    //   roughness: 1,
+    // });
+
+    //
+    //
+    const loaderImg = new THREE.TextureLoader();
+
+    // another way
+    this.meshFloor = new THREE.Mesh(
+      new THREE.SphereGeometry(18, 18, 50, 50), //, 360, 180)
+      new THREE.MeshPhongMaterial({
+        shininess: 0.8,
+        roughness: 5,
+        color: 0xfb225d,
+        map: loaderImg.load("./img/brown_fur.jpg"),
+      })
+      // new THREE.MeshStandardMaterial({
+      //   color: 0x08441c,
+      //   roughness: 0,
+      //   shininess: 8,
+      // })
+    );
+    //
+    //
+    this.meshFloor.rotation.x -= Math.PI / 2;
+    this.meshFloor.position.y = 1;
+    this.meshFloor.receiveShadow = true;
+    this.scene.add(this.meshFloor);
+    //
+
+    //
+    //
+
     //
     //----------------------------------
     //         BLENDER  MODELS
@@ -113,19 +156,20 @@ class App extends Component {
     //
     // terrain_grosso_moon.-Normalize-4_.glb
     // 49,4Kb
-    loader.load("./models/blu3export_screwtestt.glb", (gltf) => {
-      this.meshy = gltf.scene;
+    loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
+      this.mesh = gltf.scene;
+
       gltf.scene.traverse((model) => {
-        if (model.material) model.material.metalness = 0.08;
+        if (model.material) model.material.shininess = 0.08;
 
         model.receiveShadow = true;
-        model.scale.set(2.5, 2.5, 2.5);
+        model.scale.set(1.2, 1.2, 1.2);
         // model.rotation.y = 1;
         model.rotation.x += -0;
         model.rotation.y += 0;
         //
         model.position.x = 0;
-        model.position.y = 0;
+        model.position.y = 8;
         model.position.z = -2;
       });
 
@@ -134,15 +178,16 @@ class App extends Component {
 
     //
     //
-    // loader.load("./models/hair-export4.glb", (gltf) => {
+    // loader.load("./models/velvi.glb", (gltf) => {
     //   this.meshy = gltf.scene;
     //   gltf.scene.traverse((model) => {
-    //     if (model.material) model.material.metalness = 0.08;
+    //     // if (model.material) model.material.metalness = 0.08;
 
     //     model.receiveShadow = true;
-    //     model.scale.set(2, 2, 2);
+    //     model.scale.set(100, 100, 100);
     //     // model.rotation.y = 1;
-
+    //     model.rotation.x += -0;
+    //     model.rotation.y += 0;
     //     //
     //     model.position.x = 0;
     //     model.position.y = 0;
@@ -157,18 +202,19 @@ class App extends Component {
     //
     //
     //
-
+    // Babllllllllllllllllll
     // THREE.PlaneGeometry(5, 3); the 5 stands for width and 3 for height
     //const geometry = new THREE.PlaneGeometry(5, 2.5, 20, 15);
-    this.geometry = new THREE.SphereGeometry(50, 50, 50, 50);
+    this.geometry = new THREE.SphereGeometry(50, 50, 100);
     // it will increase the segments in the geometry
     // its related to this   const waveX1 = 0.1 * Math.sin(dots_vertices.x * 2 + t_timeClock);
     //
     //
-    this.materialBlob = new THREE.MeshBasicMaterial({
-      color: 0x000000,
+    this.materialBlob = new THREE.MeshPhongMaterial({
+      shininess: 0.8,
+      roughness: 0,
+      color: 0x2273fb,
       wireframe: true,
-      // map: loaderImg.load("/img/NataliaSamoilova_metalmagazine-10.jpg"),
     });
 
     //
@@ -181,12 +227,6 @@ class App extends Component {
     // x direction y direction and z
     //
 
-    //
-    //
-
-    // this.clock = new THREE.Clock();
-
-    //
     //
     //
 
@@ -239,6 +279,8 @@ class App extends Component {
     this.scene.add(this.spotLight);
     //
     //
+    this.clock = new THREE.Clock();
+
     //
   };
   /*
@@ -249,41 +291,59 @@ class App extends Component {
  */
 
   startAnimationLoop = () => {
-    // the original animation
-    //codepen.io/farisk/pen/vrbzwL?editors=0010
-    // change '0.003' for more aggressive animation
+    const t_timeClock = this.clock.getElapsedTime();
+    //
+    // With the vertices we are going to grab all the points /vertices withing the cube/flag
+    //
+    //
+    this.meshFloor.geometry.vertices.map((dots_vertices) => {
+      const waveX1 = 0.1 * Math.sin(dots_vertices.x * 1 + t_timeClock);
+      // second wave
+      const waveX2 = 0.1 * Math.sin(dots_vertices.x * 1 + t_timeClock * 2);
+      // 3 wave but in the Y direction
+      const waveY1 = 0.01 * Math.sin(dots_vertices.y * 1 + t_timeClock * 0.5); //to slowdown the time t_timeClock * 0.5);
+      //
+      //
+      dots_vertices.z = waveX1 + waveX2 + waveY1;
+    });
+
+    //
+    // // its going to wave the flag smoothly
+    this.meshFloor.geometry.verticesNeedUpdate = true;
+    //
+    //
+    //
+    //
+    //
     // 01 is very slow, 03 faster, 05 extremely faster
     this.animationSpeed = performance.now() * 0.001;
-    //
-    //
-
     //
     //--------------------------------
     //      The waves
     // -------------------------------
     //
-    // var spikes = 2;
-    // for (
-    //   var eachVertice = 0;
-    //   eachVertice < this.cube.geometry.vertices.length;
-    //   eachVertice++
-    // ) {
-    //   var p = this.cube.geometry.vertices[eachVertice];
-    //   p.normalize().multiplyScalar(
-    //     1 +
-    //       0.3 *
-    //         this.noise.perlin3(
-    //           p.x * spikes + this.animationSpeed,
-    //           p.y * spikes,
-    //           p.z * spikes
-    //         )
-    //   );
-    // }
-    // // noise related you can also use Math.sin instead of the noise but its different
-    // // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/perlin/
-    // this.cube.geometry.computeVertexNormals();
-    // this.cube.geometry.normalsNeedUpdate = true;
-    // this.cube.geometry.verticesNeedUpdate = true;
+    var spikes = 5;
+    for (
+      var eachVertice = 0;
+      eachVertice < this.cube.geometry.vertices.length;
+      eachVertice++
+    ) {
+      var p = this.cube.geometry.vertices[eachVertice];
+      p.normalize().multiplyScalar(
+        20 +
+          2 *
+            this.noise.perlin3(
+              p.x * spikes + this.animationSpeed,
+              p.y * spikes,
+              p.z * spikes
+            )
+      );
+    }
+    // noise related you can also use Math.sin instead of the noise but its different
+    // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/perlin/
+    this.cube.geometry.computeVertexNormals();
+    this.cube.geometry.normalsNeedUpdate = true;
+    this.cube.geometry.verticesNeedUpdate = true;
     //
     //
 
