@@ -164,19 +164,17 @@ After you created the fluffy hair in the sphere
 
 - I spend the whole day figuring it out **how to work with the Nodes in Blender** so to do this:
 
- 
 [<img src="./src/img/hair_img_nodes-blender1.gif"/>]()
 
->I had to **install an extension** to have one of the boxes in the picture, because after reading a couple of articles nobody could tell that you needed to install it first before using the shortcut 🤦, yep **some tutorial confuse you even further**
+> I had to **install an extension** to have one of the boxes in the picture, because after reading a couple of articles nobody could tell that you needed to install it first before using the shortcut 🤦, yep **some tutorial confuse you even further**
 
 <br>
 
 **Node Wrangler**
 
- [Node Wrangle | Usage | activation](https://docs.blender.org/manual/en/latest/addons/node/node_wrangler.html)
+[Node Wrangle | Usage | activation](https://docs.blender.org/manual/en/latest/addons/node/node_wrangler.html)
 
 [<img src="./src/img/node-wrangler.gif"/>]()
-
 
 - Bump helps you to reach even further the details of the image.
 
@@ -184,15 +182,55 @@ After you created the fluffy hair in the sphere
 
 [<img src="./src/img/bump2.gif"/>]()
 
- 
-
 [Bump Node](https://docs.blender.org/manual/en/latest/render/shader_nodes/vector/bump.html)
 
 [<img src="./src/img/hair_img_nodes-blender2.gif"/>]()
- 
-
 
 #### All seemed perfect until I exported it
 
-- Maybe I am doing something wrong? 
+- Maybe I am doing something wrong?
 
+- It s exporting it but not completely 🤔
+
+ > **Instead of the red carpet**, I am getting this:
+
+[<img src="./src/img/no exporting.jpg"/>]()
+
+- Absolutely not what I want
+
+<br>
+<br>
+<br>
+
+## Another solution 🦄
+ 
+- To simply add an image map to a threejs Geometry, simplier but not the same, I cannot say I am   satisfied with the result because it can be there s something else.
+
+[<img src="./src/img/pinky_fur1_threejsloader.jpg"/>]()
+
+```javascript
+const loaderImg = new THREE.TextureLoader();
+
+// another way
+this.meshFloor = new THREE.Mesh(
+  new THREE.PlaneGeometry(18, 18, 50, 50), //, 360, 180)
+  new THREE.MeshPhongMaterial({
+    shininess: 0.8,
+    roughness: 5,
+    // color to the img Fur
+    color: 0xfb225d,
+    // img Fur
+    map: loaderImg.load("./img/brown_fur.jpg"),
+  })
+);
+//
+//
+this.meshFloor.rotation.x -= Math.PI / 2;
+this.meshFloor.position.y = 1;
+this.meshFloor.receiveShadow = true;
+this.scene.add(this.meshFloor);
+//
+```
+
+
+[<img src="./src/img/hair_imageload2.jpg"/>]()

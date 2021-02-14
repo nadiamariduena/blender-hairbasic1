@@ -117,30 +117,25 @@ class App extends Component {
 
     //
     //
-    const loaderImg = new THREE.TextureLoader();
+    // const loaderImg = new THREE.TextureLoader();
 
-    // another way
-    this.meshFloor = new THREE.Mesh(
-      new THREE.SphereGeometry(18, 18, 50, 50), //, 360, 180)
-      new THREE.MeshPhongMaterial({
-        shininess: 0.8,
-        roughness: 5,
-        color: 0xfb225d,
-        map: loaderImg.load("./img/brown_fur.jpg"),
-      })
-      // new THREE.MeshStandardMaterial({
-      //   color: 0x08441c,
-      //   roughness: 0,
-      //   shininess: 8,
-      // })
-    );
-    //
-    //
-    this.meshFloor.rotation.x -= Math.PI / 2;
-    this.meshFloor.position.y = 1;
-    this.meshFloor.receiveShadow = true;
-    this.scene.add(this.meshFloor);
-    //
+    // // another way
+    // this.meshFloor = new THREE.Mesh(
+    //   new THREE.PlaneGeometry(18, 18, 50, 50), //, 360, 180)
+    //   new THREE.MeshPhongMaterial({
+    //     shininess: 0.8,
+    //     roughness: 5,
+    //     color: 0xfb225d,
+    //     map: loaderImg.load("./img/brown_fur.jpg"),
+    //   })
+    // );
+    // //
+    // //
+    // this.meshFloor.rotation.x -= Math.PI / 2;
+    // this.meshFloor.position.y = 1;
+    // this.meshFloor.receiveShadow = true;
+    // this.scene.add(this.meshFloor);
+    // //
 
     //
     //
@@ -156,38 +151,17 @@ class App extends Component {
     //
     // terrain_grosso_moon.-Normalize-4_.glb
     // 49,4Kb
-    loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
-      this.mesh = gltf.scene;
+    // loader.load("./models/lemon-tree_normalize-4.glb", (gltf) => {
+    //   this.mesh = gltf.scene;
 
-      gltf.scene.traverse((model) => {
-        if (model.material) model.material.shininess = 0.08;
-
-        model.receiveShadow = true;
-        model.scale.set(1.2, 1.2, 1.2);
-        // model.rotation.y = 1;
-        model.rotation.x += -0;
-        model.rotation.y += 0;
-        //
-        model.position.x = 0;
-        model.position.y = 8;
-        model.position.z = -2;
-      });
-
-      this.scene.add(gltf.scene);
-    });
-
-    //
-    //
-    // loader.load("./models/velvi.glb", (gltf) => {
-    //   this.meshy = gltf.scene;
     //   gltf.scene.traverse((model) => {
-    //     // if (model.material) model.material.metalness = 0.08;
+    //     if (model.material) model.material.shininess = 0.08;
 
     //     model.receiveShadow = true;
-    //     model.scale.set(100, 100, 100);
+    //     model.scale.set(1.2, 1.2, 1.2);
     //     // model.rotation.y = 1;
-    //     model.rotation.x += -0;
-    //     model.rotation.y += 0;
+    //     // model.rotation.x += -0;
+    //     // model.rotation.y += 0;
     //     //
     //     model.position.x = 0;
     //     model.position.y = 0;
@@ -196,34 +170,54 @@ class App extends Component {
 
     //   this.scene.add(gltf.scene);
     // });
-    // //
+
+    //velvi2t.glb
+    //
+    loader.load("./models/velvi2t.glb", (gltf) => {
+      this.mesh = gltf.scene;
+
+      gltf.scene.traverse((model) => {
+        if (model.material) model.material.shininess = 0.08;
+
+        model.receiveShadow = true;
+        model.scale.set(20, 20, 20);
+
+        //
+        model.rotation.x -= Math.PI / 2;
+
+        model.position.y = 0;
+        model.position.z = -2;
+      });
+
+      this.scene.add(gltf.scene);
+    });
     //
     //
     //
-    //
-    //
-    // Babllllllllllllllllll
+    // Ballllllllllllllllll
     // THREE.PlaneGeometry(5, 3); the 5 stands for width and 3 for height
     //const geometry = new THREE.PlaneGeometry(5, 2.5, 20, 15);
-    this.geometry = new THREE.SphereGeometry(50, 50, 100);
+    //
+    // this.geometry = new THREE.PlaneGeometry(50, 50, 100);
+    //
     // it will increase the segments in the geometry
     // its related to this   const waveX1 = 0.1 * Math.sin(dots_vertices.x * 2 + t_timeClock);
     //
     //
-    this.materialBlob = new THREE.MeshPhongMaterial({
-      shininess: 0.8,
-      roughness: 0,
-      color: 0x2273fb,
-      wireframe: true,
-    });
+    // this.materialBlob = new THREE.MeshPhongMaterial({
+    //   shininess: 0.8,
+    //   roughness: 0,
+    //   color: 0x2273fb,
+    //   wireframe: true,
+    // });
 
     //
-    this.cube = new THREE.Mesh(this.geometry, this.materialBlob);
-    this.scene.add(this.cube);
+    // this.cube = new THREE.Mesh(this.geometry, this.materialBlob);
+    // this.scene.add(this.cube);
     //
     //
     // new rotation
-    this.cube.rotation.set(-0.1, 0, 0);
+    // this.cube.rotation.set(-0.1, 0, 0);
     // x direction y direction and z
     //
 
@@ -291,7 +285,14 @@ class App extends Component {
  */
 
   startAnimationLoop = () => {
-    const t_timeClock = this.clock.getElapsedTime();
+    //
+    //--------------------------------
+    //      The waves GROUND
+    // -------------------------------
+    //
+    /*
+    
+        const t_timeClock = this.clock.getElapsedTime();
     //
     // With the vertices we are going to grab all the points /vertices withing the cube/flag
     //
@@ -317,12 +318,19 @@ class App extends Component {
     //
     // 01 is very slow, 03 faster, 05 extremely faster
     this.animationSpeed = performance.now() * 0.001;
+    
+    
+    
+    */
+
     //
     //--------------------------------
-    //      The waves
+    //      The waves sphere
     // -------------------------------
     //
-    var spikes = 5;
+    /*
+    
+       var spikes = 5;
     for (
       var eachVertice = 0;
       eachVertice < this.cube.geometry.vertices.length;
@@ -346,6 +354,10 @@ class App extends Component {
     this.cube.geometry.verticesNeedUpdate = true;
     //
     //
+    
+    
+    
+    */
 
     this.renderer.render(this.scene, this.camera);
 
